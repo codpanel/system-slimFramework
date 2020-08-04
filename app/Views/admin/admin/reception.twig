@@ -1,0 +1,87 @@
+{% extends "admin/layout.twig" %}
+{% block title %} {{l.home.28}}{% endblock %}
+
+{% block content %}
+
+<!-- Main content -->
+<div class="content-wrapper">
+
+				<div class="page-header page-header-default">
+					<div class="page-header-content">
+						<div class="page-title">
+							<h4><i class="icon-arrow-right6 position-left"></i>
+							 <span class="text-semibold">Stock</span> </h4>
+						</div>
+
+					</div>
+
+					<div class="breadcrumb-line">
+						
+						<ul class="breadcrumb-elements">
+						{% for item in delivers %}
+							<li><a href="?user={{item.id}}"> {{item.username}}</a></li>
+				        {% endfor %}
+						</ul>
+					</div>
+				</div>
+				<!-- /page header -->
+
+
+
+
+<!-- Content area -->
+<div class="content">
+
+
+{% include "admin/elements/flash.twig" %}
+
+
+        <div class="panel panel-flat">
+
+            <div class="panel-body text-center">
+                    <table class="table table-striped datatable userstable" >
+                        <thead>
+                            <tr>
+                                <th><b> Reference  </b></th>
+                                <th><b> nom de produit </b></th>
+                                <th><b> ville </b></th>
+                                <th><b> Recue  </b></th>
+                                <th><b> Livré </b></th>
+                                <th><b> Stock virtuel </b></th>
+                                <th><b> Stock physique </b></th>
+                                <th><b> Stock theorique </b></th>
+                                <th><b> Stock en cours </b></th>
+                                <th><b> Stock de Retour </b></th>
+                            </tr>
+                        </thead>
+                        <tbody>  
+                        {% for item in stocks %}
+                         <tr>
+                             <td>{{ item.product.reference }}</td>
+                             <td>{{ item.product.name}}</td>
+                             <td>{{ item.city.city_name }}</td>
+                             <td>{{ item.Recue }}</td>
+                             <td>{{ item.Livre }}</td>
+                             <td style="width:115px; "> 
+                             
+                             {% if item.stockVirtuel is not empty %}
+                             {{ item.stockVirtuel }} +   {{ item.stockTheorique() }} = 
+                             <span class="label label-success">{{item.stockBozi()}}</span>
+                             {% endif %}
+                             
+                             </td>
+                             <td>{{ item.StockPhisique }}</td>
+                             <td>{{ item.stockTheorique() }}</td>
+                             <td>{{ item.stockEnCours }}</td>
+                             <td>{{ item.stockRetour }}</td>
+                         </tr>
+                        {% endfor %}   
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
+
+</div>
+</div>
+{% endblock %}
